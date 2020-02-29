@@ -1,0 +1,23 @@
+## BWA aligner
+# first we need to index the reference file. This makes some extra files which are used for sequencing
+$ bwa index reference.fasta
+# Now we align paired-end. genome.fastq is the whole genome.
+$ bwa mem reference.fasta genome.fastq genome.fastq > bwa_output.sam
+# Convert sam file to bam file
+$ samtools view -h -b -S bwa_output.sam > bwa_output.bam
+# sort bam file
+$ samtools sort -o bwa_output.sorted.bam bwa_output.bam
+# index bam file
+$ samtools index bwa_output.sorted.bam
+
+## BOWTIE2 aligner
+# first we need to build index files
+$ bowtie2-build reference.fasta reference.fasta
+# then do sequencing against whole genome. Based on the syntax we need to have two genome files (in this case genome_1.fastq and genome_2.fastq are exactly the same as genome.fastq)
+$ bowtie2 -x reference.fasta -1 genome_1.fastq -2 genome_2.fastq > bowtie2_output.sam
+# finally convert sam file to bam file
+$ samtools view -h -b -S bowtie2_output.sam > bowtie2_output.bam
+# sort bam file
+$ samtools sort -o bowtie2_output.sorted.bam bowtie2_output.bam
+# index bam file
+$ samtools index bowtie2_output.sorted.bam
