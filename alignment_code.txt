@@ -1,3 +1,4 @@
+### THis is conda code do sequencing against the reference file
 ## BWA aligner
 # first we need to index the reference file. This makes some extra files which are used for sequencing
 $ bwa index reference.fasta
